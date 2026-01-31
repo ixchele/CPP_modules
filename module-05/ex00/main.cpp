@@ -1,67 +1,56 @@
-#include <iostream>
+#include "colors.h"
+#include "tool_functions.hpp"
 #include <Bureaucrat.hpp>
+#include <iostream>
+#include <cstdlib>
+#include <sstream>
+#include <string>
 
-int main() {
-	std::cout << "=== TEST 1 : Création normale ===" << std::endl;
+
+void	safeGetLine(std::string &input)
+{
+	if (!std::getline(std::cin, input))
+		std::exit(1);
+}
+
+Bureaucrat	*createBureaucrat(void) {
+	std::string	name;
+	short		grade;
+	std::string	input;
+
+	writeTextSlowly("choose name for your Bureaucrat : ");
+	safeGetLine(name);
+	Bureaucrat	*bureaucrat = new Bureaucrat(name, 150);
+retryGettingGrade:
 	try {
-		Bureaucrat a("Alice", 42);
-		Bureaucrat b("Bob", 1);
-		Bureaucrat c("Charlie", 150);
-
-		std::cout << a << std::endl;
-		std::cout << b << std::endl;
-		std::cout << c << std::endl;
-	} catch (std::exception &e) {
-		std::cout << "Exception: " << e.what() << std::endl;
+		writeTextSlowly("give your Bureaucrat a grade : ");
+		safeGetLine(input);
+		std::stringstream	ss(input);
+		ss >> grade;
+		if (ss.fail() || !ss.eof())
+			throw Bureaucrat::GradeException(COLOR_RED "[!] Bureaucrat grade must be a number between [1-150]" COLOR_RESET);
+		bureaucrat->setGrade(grade);
+	} catch (Bureaucrat::GradeException &e) {
+		writeTextSlowly(e.what()); std::cout << std::endl; 
+		goto retryGettingGrade;
 	}
+	return bureaucrat;
+}
 
-	std::cout << "\n=== TEST 2 : Incrément / Décrément ===" << std::endl;
-	try {
-		Bureaucrat d("David", 3);
-		std::cout << d << std::endl;
+int main (int ac, char **av __attribute__((unused))) {
+	if (ac != 1)
+		return 0;
 
-		d.incrementGrade(); // 3 -> 2
-		std::cout << "After increment: " << d << std::endl;
+	std::string	input;
 
-		d.decrementGrade(); // 2 -> 3
-		std::cout << "After decrement: " << d << std::endl;
-	} catch (std::exception &e) {
-		std::cout << "Exception: " << e.what() << std::endl;
+	while (true) {
+		std::stringstream ss;
+		Bureaucrat	*bureaucrat = createBureaucrat();
+		ss << *bureaucrat;
+		writeTextSlowly(COLOR_BRIGHT_GREEN "[✓] Bureaucrat created successfully\n" COLOR_RESET);
+		writeTextSlowly("your Bureaucrat infos ; ");
+		writeTextSlowly(ss.str()); std::cout << std::endl;
+		delete bureaucrat;
 	}
-
-	std::cout << "\n=== TEST 3 : Trop haut (grade 0) ===" << std::endl;
-	try {
-		Bureaucrat e("ErrorHigh", 0);
-		std::cout << e << std::endl;
-	} catch (std::exception &e) {
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n=== TEST 4 : Trop bas (grade 151) ===" << std::endl;
-	try {
-		Bureaucrat f("ErrorLow", 151);
-		std::cout << f << std::endl;
-	} catch (std::exception &e) {
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n=== TEST 5 : Incrément impossible ===" << std::endl;
-	try {
-		Bureaucrat g("God", 1);
-		std::cout << g << std::endl;
-		g.incrementGrade(); // doit throw
-	} catch (std::exception &e) {
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n=== TEST 6 : Décrément impossible ===" << std::endl;
-	try {
-		Bureaucrat h("Peasant", 150);
-		std::cout << h << std::endl;
-		h.decrementGrade(); // doit throw
-	} catch (std::exception &e) {
-		std::cout << "Exception caught: " << e.what() << std::endl;
-	}
-
 	return 0;
 }

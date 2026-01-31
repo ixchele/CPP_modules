@@ -1,3 +1,4 @@
+#include "colors.h"
 #include <Bureaucrat.hpp>
 #include <iostream>
 #include <ostream>
@@ -21,7 +22,7 @@ Bureaucrat::Bureaucrat(void) : _name("Steve"), _grade(150) {
 	//pass
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name) {
+Bureaucrat::Bureaucrat(std::string name, short grade) : _name(name) {
 	setGrade(grade);
 }
 
@@ -41,12 +42,12 @@ std::string	Bureaucrat::getName(void) const {
 	return _name;
 }
 
-void	Bureaucrat::setGrade(int grade) {
+void	Bureaucrat::setGrade(short grade) {
 	if (grade < 1)
-		throw Bureaucrat::GradeTooHighException("Bureaucrat grade is too high");
+		throw Bureaucrat::GradeTooHighException(COLOR_RED "[!] Bureaucrat grade is too high" COLOR_RESET);
 	else
 		if (grade > 150)
-			throw Bureaucrat::GradeTooLowException("Bureaucrat grade is too low");
+			throw Bureaucrat::GradeTooLowException(COLOR_RED "[!] Bureaucrat grade is too low" COLOR_RESET);
 	_grade = grade;
 }
 

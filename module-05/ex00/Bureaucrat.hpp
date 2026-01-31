@@ -8,6 +8,7 @@ private:
 	const std::string	_name;
 	int					_grade;
 
+public:
 	class GradeException : public std::runtime_error {
 	public:
 		GradeException(const std::string &error);
@@ -20,16 +21,16 @@ private:
 	public:
 		GradeTooLowException(const std::string &error);
 	};
-public:
 	Bureaucrat(void);
-	Bureaucrat(const std::string name, int grade);
+	Bureaucrat(const std::string name, short grade);
 	Bureaucrat(Bureaucrat &other);
 	~Bureaucrat(void);
 
 
 	int			getGrade(void) const;
 	std::string	getName(void) const;
-	void		setGrade(int grade);
+	void		setGrade(short grade);
+	void		setName(std::string name);
 
 	void		incrementGrade(void);
 	void		decrementGrade(void);
