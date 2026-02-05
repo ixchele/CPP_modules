@@ -34,8 +34,6 @@ retryGettingGrade:
 		writeTextSlowly(e.what());
 		std::cout << std::endl;
 		goto retryGettingGrade;
-	} catch (std::exception &e) {
-		std::cerr << "indefind error (" << e.what() << ")" << std::endl;
 	}
 	return bureaucrat;
 }
@@ -46,15 +44,19 @@ int main (int ac, char **av __attribute__((unused))) {
 
 	std::string	input;
 
-	while (true) {
-		std::stringstream ss;
-		Bureaucrat	*bureaucrat = createBureaucrat();
-		ss << *bureaucrat;
-		writeTextSlowly(COLOR_BRIGHT_GREEN "[✓] Bureaucrat created successfully\n" COLOR_RESET);
-		writeTextSlowly("your Bureaucrat infos ; ");
-		writeTextSlowly(ss.str());
-		std::cout << std::endl;
-		delete bureaucrat;
+	try {
+		while (true) {
+			std::stringstream ss;
+			Bureaucrat	*bureaucrat = createBureaucrat();
+			ss << *bureaucrat;
+			writeTextSlowly(COLOR_BRIGHT_GREEN "[✓] Bureaucrat created successfully\n" COLOR_RESET);
+			writeTextSlowly("your Bureaucrat infos ; ");
+			writeTextSlowly(ss.str());
+			std::cout << std::endl;
+			delete bureaucrat;
+		}
+	} catch (std::exception &e) {
+		std::cerr << "indefind error (" << e.what() << ")" << std::endl;
 	}
 	return 0;
 }
