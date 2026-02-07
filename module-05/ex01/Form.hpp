@@ -1,14 +1,16 @@
 #pragma once
-#include <Bureaucrat.hpp>
+#include <ostream>
 #include <stdexcept>
 #include <string>
+
+class Bureaucrat;
 
 class Form {
 private:
 	const std::string	_name;
 	bool				_isSigned;
-	const short			_gradeRequiredToSign;
-	const short			_gradeRequiredToExecute;
+	const long long		_gradeRequiredToSign;
+	const long long		_gradeRequiredToExecute;
 public:
 	struct GradeException : public std::runtime_error {
 		GradeException(const std::string &error);
@@ -21,13 +23,17 @@ public:
 	};
 
 	Form(void);
-	Form(std::string name, short gradeRequiredToSign, short gradeRequiredToExecute);
+	Form(std::string name, long long gradeRequiredToSign, long long gradeRequiredToExecute);
 	Form(const Form &other);
 	~Form(void);
 
+	Form	&operator=(const Form &other);
+
 	std::string	getName(void) const;
 	bool		isSigned(void) const;
-	short		gradeRequiredToSign(void) const;
-	short		gradeRequiredToExecute(void) const;
-	void		beSigned(Bureaucrat bureaucrat);
+	long long	gradeRequiredToSign(void) const;
+	long long	gradeRequiredToExecute(void) const;
+	void		beSigned(const Bureaucrat &bureaucrat);
 };
+
+std::ostream &operator<<(std::ostream &os, const Form &form);

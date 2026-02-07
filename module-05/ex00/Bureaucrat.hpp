@@ -19,14 +19,15 @@ public:
 		GradeTooLowException(const std::string &error);
 	};
 	Bureaucrat(void);
-	Bureaucrat(const std::string name, short grade);
-	Bureaucrat(Bureaucrat &other);
+	Bureaucrat(const std::string name, long long grade);
+	Bureaucrat(const Bureaucrat &other);
 	~Bureaucrat(void);
-
+	
+	Bureaucrat	&operator=(const Bureaucrat &other);
 
 	int			getGrade(void) const;
 	std::string	getName(void) const;
-	void		setGrade(short grade);
+	void		setGrade(long long grade);
 	void		setName(std::string name);
 
 	void		incrementGrade(void);

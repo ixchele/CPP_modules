@@ -1,3 +1,4 @@
+#include "Form.hpp"
 #include "colors.h"
 #include <Bureaucrat.hpp>
 #include <iostream>
@@ -22,16 +23,24 @@ Bureaucrat::Bureaucrat(void) : _name("Steve"), _grade(150) {
 	//pass
 }
 
-Bureaucrat::Bureaucrat(std::string name, short grade) : _name(name) {
+Bureaucrat::Bureaucrat(std::string name, long long grade) : _name(name) {
 	setGrade(grade);
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat &other) : _name(other.getName()), _grade(other.getGrade()) {
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other.getName()), _grade(other.getGrade()) {
 	//pass
 }
 
 Bureaucrat::~Bureaucrat(void) {
 	//pass
+}
+
+Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &other) {
+	if (this == &other)
+		return *this;
+	this->~Bureaucrat();
+	new(this) Bureaucrat(other);
+	return *this;
 }
 
 int	Bureaucrat::getGrade(void) const {
@@ -42,7 +51,7 @@ std::string	Bureaucrat::getName(void) const {
 	return _name;
 }
 
-void	Bureaucrat::setGrade(short grade) {
+void	Bureaucrat::setGrade(long long grade) {
 	if (grade < 1)
 		throw Bureaucrat::GradeTooHighException(COLOR_RED "[!] Bureaucrat grade is too high" COLOR_RESET);
 	else
