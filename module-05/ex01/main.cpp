@@ -1,11 +1,15 @@
+#include "Form.hpp"
 #include "colors.h"
 #include "tool_functions.hpp"
 #include <Bureaucrat.hpp>
+#include <cstddef>
 #include <exception>
 #include <iostream>
 #include <cstdlib>
+#include <ostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 
 void	safeGetLine(std::string &input) {
@@ -43,17 +47,24 @@ int main (int ac, char **av __attribute__((unused))) {
 		return 0;
 
 	std::string	input;
-
+	Bureaucrat	*Bureaucrats[10];
+	Form		*Forms[10];
+	size_t		idx = 0;
+	
 	try {
 		while (true) {
-			std::stringstream ss;
-			Bureaucrat	*bureaucrat = createBureaucrat();
-			ss << *bureaucrat;
-			writeTextSlowly(COLOR_BRIGHT_GREEN "[✓] Bureaucrat created successfully\n" COLOR_RESET);
-			writeTextSlowly("your Bureaucrat infos ; ");
-			writeTextSlowly(ss.str());
-			std::cout << std::endl;
-			delete bureaucrat;
+			safeGetLine(input);
+			if (input == "create Bureaucrat")
+			{
+				std::stringstream ss;
+				Bureaucrats[idx] = createBureaucrat();
+				ss << *Bureaucrats[idx];
+				writeTextSlowly(COLOR_BRIGHT_GREEN "[✓] Bureaucrat created successfully\n" COLOR_RESET);
+				writeTextSlowly("your Bureaucrat infos ; ");
+				writeTextSlowly(ss.str());
+				std::cout << std::endl;
+				idx = (idx+1) % 10;
+			}
 		}
 	} catch (std::exception &e) {
 		std::cerr << "indefind error (" << e.what() << ")" << std::endl;
