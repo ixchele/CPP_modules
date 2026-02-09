@@ -39,7 +39,6 @@ Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &other) {
 	if (this == &other)
 		return *this;
 	this->~Bureaucrat();
-	delete this;
 	new(this) Bureaucrat(other);
 	return *this;
 }

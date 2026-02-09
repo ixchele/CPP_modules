@@ -150,12 +150,12 @@ void	safeGetLine(std::string &input)
 	}
 }
 
+struct winsize	g_window;
+
 void handle_resize(int sig) {
     (void)sig;
-    struct winsize w;
-
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) {
-        if (w.ws_row < 20 || w.ws_col < 60) { 
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &g_window) == 0) {
+        if (g_window.ws_row < 20 || g_window.ws_col < 60) { 
 			disableAlternateScreen();
             std::cout << COLOR_RED "Terminal too small!" COLOR_RESET << std::endl;
 			std::exit(1);

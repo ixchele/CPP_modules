@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ostream>
 #include <sstream>
+#include <iomanip>
 #include <string>
 #include <csignal>
 
@@ -81,6 +82,67 @@ retryGettingGradeToExec:
 	return form;
 }
 
+
+std::string	shrinkField(std::string field)
+{
+	if (field.size() <= 10)
+		return field;
+	field.resize(10);
+	field.replace(9, 1, ".");
+	return field;
+}
+
+void	showForms(const Form *Forms, const size_t count) {
+
+	std::ostringstream oss;
+
+	std::cout << COLOR_GREEN ;
+	oss << "╭─────────────────────╮\n";
+	oss << "│"
+		<< std::right << std::setw(10) << "Index" << "|"
+		<< std::right << std::setw(10) << "FormName"<< "│";
+	oss << "\n├─────────────────────┤\n";
+	for (size_t i = 0; i < 10; ++i)
+	{
+		oss << COLOR_GREEN "│" COLOR_RESET
+			<< std::right << std::setw(10) << i << "|"
+			<< std::right << std::setw(10) << shrinkField(shrinkField(Forms[i].getName()))
+			<< COLOR_GREEN "│" COLOR_RESET "\n";
+	}
+	oss << COLOR_GREEN "╰─────────────────────╯" COLOR_RESET;
+	
+	printSlowLines(oss.str(), 50000);
+	(void)count;
+}
+
+void	showBureaucrats(Bureaucrat *Bureaucrats, const size_t count) {
+	std::ostringstream oss;
+
+	std::cout << COLOR_GREEN ;
+	(void)count;
+
+	oss << "╭───────────────────────────────────────────────╮\n";
+	oss << "│"
+		<< std::right << std::setw(15) << "Index" << "|"
+		<< std::right << std::setw(15) << "BureaucratName"<< "│"
+		<< std::right << std::setw(15) << "BureaucratGrade"<< "│";
+	oss << "\n├───────────────────────────────────────────────┤\n";
+	for (size_t i = 0; i < 10; ++i)
+	{
+		oss << COLOR_GREEN "│" COLOR_RESET
+			<< std::right << std::setw(15) << i
+			<< COLOR_GREEN "│" COLOR_RESET
+			<< std::right << std::setw(15) << shrinkField(shrinkField(Bureaucrats[i].getName()))
+			<< COLOR_GREEN "│" COLOR_RESET
+			<< std::right << std::setw(15) << Bureaucrats[i].getGrade()
+			<< COLOR_GREEN "│" COLOR_RESET "\n";
+	}
+	oss << COLOR_GREEN "╰───────────────────────────────────────────────╯" COLOR_RESET;
+	
+	printSlowLines(oss.str(), 50000);
+
+}
+
 void	cli(void) {
 	std::string	input;
 	Bureaucrat	Bureaucrats[10];
@@ -88,9 +150,8 @@ void	cli(void) {
 	size_t		idxB = 0;
 	size_t		idxF = 0;
 
-	(void)Bureaucrats;
-	(void)Forms;
 	enableAlternateScreen();
+	clearScreen();
 	while (true) {
 		input = getSafeInput("❯ ");
 		clearFromCursor();
@@ -102,10 +163,11 @@ void	cli(void) {
 			Forms[idxF] = createForm();
 			idxF = (idxF+1) % 10;
 		}
-		else if (input == "show Forms") {
-			for (size_t i = 0; i < idxF; ++i)
-				std::cout << Forms[i] << std::endl;
-		}
+		else if (input == "show Forms")
+			showForms(Forms, idxF);
+		else if (input == "show Bureaucrats")
+			showBureaucrats(Bureaucrats, idxB);
+
 	}
 }
 
