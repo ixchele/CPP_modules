@@ -9,10 +9,10 @@ CLEAR = \033[2K\r
 # --- Variables ---
 NAME = a.out
 CXX = c++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 INCLUDES = -I.
 LFLAGS = 
-SRC = Bureaucrat.cpp main.cpp tool_functions.cpp 
+SRC = Bureaucrat.cpp Form.cpp main.cpp tool_functions.cpp 
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)

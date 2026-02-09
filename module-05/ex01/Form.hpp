@@ -11,6 +11,8 @@ private:
 	bool				_isSigned;
 	const long long		_gradeRequiredToSign;
 	const long long		_gradeRequiredToExecute;
+
+	long long	checkGrade(long long grade);
 public:
 	struct GradeException : public std::runtime_error {
 		GradeException(const std::string &error);
@@ -20,6 +22,18 @@ public:
 	};
 	struct GradeTooLowException : public GradeException {
 		GradeTooLowException(const std::string &error);
+	};
+	struct SignGradeTooLowException : public GradeTooLowException {
+		SignGradeTooLowException(const std::string &erroe);
+	};
+	struct ExecGradeTooLowException : public GradeTooLowException {
+		ExecGradeTooLowException(const std::string &erroe);
+	};
+	struct SignGradeTooHighException : public GradeTooHighException {
+		SignGradeTooHighException(const std::string &erroe);
+	};
+	struct ExecGradeTooHighException : public GradeTooHighException {
+		ExecGradeTooHighException(const std::string &erroe);
 	};
 
 	Form(void);

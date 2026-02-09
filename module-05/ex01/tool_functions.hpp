@@ -19,3 +19,7 @@ void	moveTo(int, int);
 void	enableAlternateScreen();
 void	disableAlternateScreen();
 void	safeGetLine(std::string &);
+void	handle_resize(int sig);
+void	disableLineWrap();
+void	enableLineWrap();
+std::string	getSafeInput(const std::string& prompt);
