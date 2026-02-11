@@ -126,7 +126,7 @@ void	BureaucratActions(Bureaucrat *Bureaucrats, size_t Bcount, Form *Forms, size
 
 retryGetId:
 	std::istringstream	inputId (getSafeInput("choose a Bureaucrat : "));
-	if (!(inputId >> idB) || !inputId.eof() || idB < 0 || idB > Bcount - 1) {
+	if (!(inputId >> idB) || !inputId.eof()  || idB > Bcount - 1) {
 		writeTextSlowly(COLOR_RED "[!] invalid id!\n" COLOR_RESET);
 		goto retryGetId;
 	}
@@ -148,7 +148,7 @@ retryGetAction:
 			showForms(Forms, Fcount);
 		retryGetIdForm:
 			std::istringstream formId (getSafeInput("choose a Form to sign : "));
-			if (!(formId >> idF) || !formId.eof() || idF < 0 || idF > Fcount - 1) {
+			if (!(formId >> idF) || !formId.eof() || idF > Fcount - 1) {
 				writeTextSlowly(COLOR_RED "[!] invalid id!\n" COLOR_RESET);
 				goto retryGetIdForm;
 			}
