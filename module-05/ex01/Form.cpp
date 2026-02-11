@@ -2,6 +2,7 @@
 #include <Form.hpp>
 #include <Bureaucrat.hpp>
 #include <ios>
+#include <iostream>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -98,6 +99,7 @@ void	Form::beSigned(const Bureaucrat &bureaucrat) {
 		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because his grade is too low";
 		throw Form::GradeTooLowException(error);
 	}
+	std::cout << bureaucrat.getName() + " signed " + getName() << std::endl; 
 	_isSigned = true;
 }
 
