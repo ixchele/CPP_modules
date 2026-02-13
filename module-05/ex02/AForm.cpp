@@ -45,8 +45,8 @@ AForm::AForm(void) : _name("generic form"), _isSigned(false), _gradeRequiredToSi
 	//pass
 }
 
-AForm::AForm(std::string name, long long gradeRequiredToSign, long long gradeRequiredToExecute)
-	: _name(name), _isSigned(false), _gradeRequiredToSign(gradeRequiredToSign), _gradeRequiredToExecute(gradeRequiredToExecute) {
+AForm::AForm(std::string name, std::string target, long long gradeRequiredToSign, long long gradeRequiredToExecute)
+	: _target(target), _name(name), _isSigned(false), _gradeRequiredToSign(gradeRequiredToSign), _gradeRequiredToExecute(gradeRequiredToExecute) {
 	if (gradeRequiredToSign < 1)
 		throw SignGradeTooHighException(COLOR_RED "[!] AForm required grade to sign too high" COLOR_RESET);
 	if (gradeRequiredToSign > 150)
@@ -69,6 +69,21 @@ AForm::~AForm(void) {
 	//pass
 }
 
+AForm	&AForm::operator=(const AForm &other) {
+	if (this == &other)
+		return *this;
+	setTarget(other.getTarget());
+	return *this;;
+}
+
+void	AForm::setTarget(const std::string &target) {
+	_target = target;
+}
+
+std::string	AForm::getTarget(void) const {
+	return _target;
+}
+
 std::string	AForm::getName(void) const {
 	return _name;
 }
@@ -88,16 +103,24 @@ long long	AForm::gradeRequiredToExecute(void) const {
 void	AForm::beSigned(const Bureaucrat &bureaucrat) {
 	if (bureaucrat.getGrade() > gradeRequiredToSign()) {
 		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because his grade is too low";
-		throw AForm::SignGradeTooLowException(error);
+		throw AForm::GradeTooLowException(error);
 	}
+	if (isSigned() == true) {
+		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because " + getName() + " is already signed";
+		throw std::runtime_error(error);
+	}
+	std::cout << bureaucrat.getName() + " signed " + getName() << std::endl; 
 	_isSigned = true;
-	std::cout << COLOR_GREEN + bureaucrat.getName() + " signed " + getName() + COLOR_RESET << std::endl;
 }
 
 void	AForm::execute(const Bureaucrat &bureaucrat) const {
 	if (bureaucrat.getGrade() > gradeRequiredToExecute()) {
 		std::string error = bureaucrat.getName() + " couldn't execute " + getName() + "because his grade is too low";
 		throw AForm::ExecGradeTooLowException(error);
+	}
+	if (isSigned() == false) {
+		std::string error = bureaucrat.getName() + " couldn't execute " + getName() + "because " + getName() + " is not signed";
+		throw std::runtime_error(error);
 	}
 	FormAction();
 	std::cout << COLOR_GREEN + bureaucrat.getName() + " executed " + getName() + COLOR_RESET << std::endl;

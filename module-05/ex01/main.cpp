@@ -196,7 +196,6 @@ void	showBureaucrats(Bureaucrat *Bureaucrats, size_t Bcount, Form *Forms, size_t
 
 	printSlowLines(oss.str(), 50000);
 	BureaucratActions(Bureaucrats, Bcount, Forms, Fcount);
-	// std::string input = getSafeInput("choose a Bureaucrat : ");
 }
 
 void	cli(void) {

@@ -38,11 +38,11 @@ public:
 	};
 
 	AForm(void);
-	AForm(std::string name, long long gradeRequiredToSign, long long gradeRequiredToExecute);
+	AForm(std::string name, std::string _target, long long gradeRequiredToSign, long long gradeRequiredToExecute);
 	AForm(const AForm &other);
 	virtual ~AForm(void);
 
-	virtual AForm	&operator=(const AForm &other);
+	AForm	&operator=(const AForm &other);
 
 	std::string		getName(void) const;
 	bool			isSigned(void) const;
@@ -54,7 +54,7 @@ public:
 
 	void			beSigned(const Bureaucrat &bureaucrat);
 	virtual	void	FormAction(void) const = 0 ;
-	virtual void	execute(Bureaucrat const &executor) const;
+	void			execute(Bureaucrat const &executor) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const AForm &form);

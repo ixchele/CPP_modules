@@ -1,10 +1,7 @@
 #pragma once
 #include <AForm.hpp>
 
-class RobotomyRequestForm : public AForm {
-private:
-	static std::string	_shrubbery;
-public:
+struct RobotomyRequestForm : public AForm {
 	RobotomyRequestForm(void);
 	RobotomyRequestForm(const std::string &name);
 	RobotomyRequestForm(const RobotomyRequestForm &other);
@@ -12,6 +9,7 @@ public:
 
 	RobotomyRequestForm	&operator=(const RobotomyRequestForm &other);
 
-	void	FormAction(void);
+	void	FormAction(void) const;
 
 };
+

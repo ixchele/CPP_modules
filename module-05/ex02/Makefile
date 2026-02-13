@@ -9,10 +9,10 @@ CLEAR = \033[2K\r
 # --- Variables ---
 NAME = a.out
 CXX = c++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 INCLUDES = -I.
-LFLAGS = 
-SRC = Bureaucrat.cpp Form.cpp main.cpp tool_functions.cpp 
+CPPFLAGS = -g3 -Wall -Wextra -Werror -std=c++98 $(INCLUDES)
+LFLAGS =  $(CPPFLAGS)
+SRC = ./AForm.cpp ./Bureaucrat.cpp ./PresidentialPardonForm.cpp ./RobotomyRequestForm.cpp ./ShrubberyCreationForm.cpp ./main.cpp
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)
@@ -25,7 +25,7 @@ $(NAME): $(OBJ)
 obj/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "[$(GREEN)$(BOLD) OK $(RESET)$(BOLD)]$(RESET) compiling $(BOLD)$@...$(RESET)$(CLEAR)"
-	@$(CXX) -c $(CPPFLAGS) $< $(INCLUDES) -o $@
+	@$(CXX) -c $(CPPFLAGS) $< -o $@
 
 clean:
 	@printf "$(RED)$(BOLD)cleaning object files...\n"
@@ -38,3 +38,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+.SECONDARY: $(OBJ)

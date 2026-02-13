@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 Form::GradeException::GradeException(const std::string &error)
@@ -98,6 +99,10 @@ void	Form::beSigned(const Bureaucrat &bureaucrat) {
 	if (bureaucrat.getGrade() > gradeRequiredToSign()) {
 		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because his grade is too low";
 		throw Form::GradeTooLowException(error);
+	}
+	if (isSigned() == false) {
+		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because " + getName() + " is already signed";
+		throw std::runtime_error(error);
 	}
 	std::cout << bureaucrat.getName() + " signed " + getName() << std::endl; 
 	_isSigned = true;
