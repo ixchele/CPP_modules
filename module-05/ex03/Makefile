@@ -10,9 +10,9 @@ CLEAR = \033[2K\r
 NAME = a.out
 CXX = c++
 INCLUDES = -I.
-CPPFLAGS = -g3 -Wall -Wextra -Werror -std=c++98 $(INCLUDES)
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 $(INCLUDES)
 LFLAGS =  $(CPPFLAGS)
-SRC = ./AForm.cpp ./Bureaucrat.cpp ./PresidentialPardonForm.cpp ./RobotomyRequestForm.cpp ./ShrubberyCreationForm.cpp ./main.cpp
+SRC = ./Bureaucrat.cpp ./RobotomyRequestForm.cpp ./ShrubberyCreationForm.cpp ./PresidentialPardonForm.cpp ./AForm.cpp ./main.cpp ./Intern.cpp
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)
