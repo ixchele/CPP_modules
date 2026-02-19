@@ -4,7 +4,7 @@
 #include <string>
 #include <AForm.hpp>
 
-
+// hamid
 class Bureaucrat {
 private:
 	const std::string	_name;
