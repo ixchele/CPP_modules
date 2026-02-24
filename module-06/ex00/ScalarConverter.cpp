@@ -7,36 +7,9 @@
 #include <ios>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <string>
 
-
-bool	isPSeudoLiterals(const std::string &input) {
-	std::string	pseudoLiterals [] = {
-		"-inff", "+inff", "nanf",
-		"-inf", "+inf", "nan",
-		"",
-	};
-	
-	for (size_t i = 0; !pseudoLiterals[i].empty(); i++) {
-		if (pseudoLiterals[i] == input)
-			return true;
-	}
-
-	return false;
-}
-
-void	handlePSeudoLiterals(std::string input) {
-	std::cout << "char: impossible" << std::endl;
-    std::cout << "int: impossible" << std::endl;
-
-    bool hasF = (input.at(input.size()-1) == 'f' && input != "inf" && input != "nan");
-
-    std::string asFloat = hasF ? input : input + "f";
-    std::string asDouble = hasF ? input.substr(0, input.size() - 1) : input;
-
-    std::cout << "float: " << asFloat << std::endl;
-    std::cout << "double: " << asDouble << std::endl;
-}
 
 void	printChar(const double val) {
 	if (std::isnan(val) || val > std::numeric_limits<char>::max() || val < std::numeric_limits<char>::min())
@@ -44,7 +17,7 @@ void	printChar(const double val) {
 	else if (std::isprint(static_cast<char>(val)) == false)
 		std::cout << "char: Non displayable" << std::endl;
 	else
-		std::cout << "char: " << static_cast<char>(val) << std::endl;
+		std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
 }
 
 void	printInt(const double val) {
@@ -62,31 +35,40 @@ void	printFloat(const double val) {
 }
 
 void	printDouble(const double val) {
-	float d = static_cast<float>(val);
-	if (std::isinf(d) == false)
-		std::cout << std::fixed << std::setprecision(1);
-	std::cout << "double: " << d << std::endl;
+	std::cout << "double: " << val << std::endl;
+}
+
+bool	handlePSeudoLiterals(std::string input) {
+	char	*endPtr = NULL;
+	double	val = std::strtod(input.c_str(), &endPtr);
+	if (*endPtr != '\0' && *endPtr != 'f')
+		return false;
+	printChar(val);
+	printInt(val);
+	printFloat(val);
+	printDouble(val);
+	return true;
 }
 
 void	ScalarConverter::convert(const std::string &input) {
+	std::stringstream	sstream(input);
+	double				val;
 
-	if (isPSeudoLiterals(input)) {
-		handlePSeudoLiterals(input);
-		return ;
+	if (!(sstream >> val)) {
+		if (handlePSeudoLiterals(input) == false)
+			std::cout << "[!] invalid argument." << std::endl; 
+		return;
 	}
 
-	char *endPtr = NULL;
-	double value = std::strtod(input.c_str(), &endPtr);
-	if (*endPtr != '\0' && input.size() > 1) {
-		std::cout << "[!] invalid argument." << std::endl;
-		return ;
-	}
-	else if (*endPtr != '\0' && input.size() == 1) {
-		value = static_cast<double>(input[0]);
-	}
+	std::string	remaining;
+	sstream >> remaining;
 
-	printChar(value);
-	printInt(value);
-	printFloat(value);
-	printDouble(value);
+	if (!remaining.empty() && remaining != "f") {
+		std::cout << "[!] invalid end argument." << std::endl; 
+		return;
+	}
+	printChar(val);
+	printInt(val);
+	printFloat(val);
+	printDouble(val);
 }

@@ -7,12 +7,12 @@ RESET = \033[0m
 CLEAR = \033[2K\r
 
 # --- Variables ---
-NAME = convert
+NAME = serializer-test
 CXX = c++
 INCLUDES = -I.
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 $(INCLUDES)
 LFLAGS =  $(CPPFLAGS)
-SRC = ./ScalarConverter.cpp ./main.cpp
+SRC = ./Serializer.cpp ./main.cpp
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)
