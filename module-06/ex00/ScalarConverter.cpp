@@ -39,10 +39,18 @@ void	printDouble(const double val) {
 }
 
 bool	fallBack(std::string input) {
-	char	*endPtr = NULL;
-	double	val = std::strtod(input.c_str(), &endPtr);
-	if (*endPtr != '\0' && std::string(endPtr) != "f")
-		return false;
+	double	val;
+
+	if (input.length() == 1 && !std::isdigit(input[0])) {
+		val = static_cast<double>(input[0]);
+	}
+	else {
+		char	*endPtr = NULL;
+		val = std::strtod(input.c_str(), &endPtr);
+		if (*endPtr != '\0' && std::string(endPtr) != "f")
+			return false;
+		if (input.empty()) return false;
+	}
 	printChar(val);
 	printInt(val);
 	printFloat(val);
@@ -61,7 +69,8 @@ void	ScalarConverter::convert(const std::string &input) {
 	}
 
 	std::string	remaining;
-	if (!sstream.eof() || (!remaining.empty() && remaining != "f")) {
+	sstream >> remaining;
+	if ((!remaining.empty() && remaining != "f") || ((sstream >> remaining))) {
 		std::cout << "[!] invalid end argument." << std::endl; 
 		return;
 	}
