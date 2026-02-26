@@ -7,12 +7,12 @@ RESET = \033[0m
 CLEAR = \033[2K\r
 
 # --- Variables ---
-NAME = serializer
+NAME = a.out
 CXX = c++
 INCLUDES = -I.
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 $(INCLUDES)
 LFLAGS =  $(CPPFLAGS)
-SRC = ./Data.cpp ./main.cpp ./Serializer.cpp
+SRC = ./A.cpp ./B.cpp ./C.cpp ./Base.cpp  ./main.cpp
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)

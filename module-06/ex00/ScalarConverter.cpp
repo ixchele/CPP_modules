@@ -38,10 +38,10 @@ void	printDouble(const double val) {
 	std::cout << "double: " << val << std::endl;
 }
 
-bool	handlePSeudoLiterals(std::string input) {
+bool	fallBack(std::string input) {
 	char	*endPtr = NULL;
 	double	val = std::strtod(input.c_str(), &endPtr);
-	if (*endPtr != '\0' && *endPtr != 'f')
+	if (*endPtr != '\0' && std::string(endPtr) != "f")
 		return false;
 	printChar(val);
 	printInt(val);
@@ -55,15 +55,13 @@ void	ScalarConverter::convert(const std::string &input) {
 	double				val;
 
 	if (!(sstream >> val)) {
-		if (handlePSeudoLiterals(input) == false)
+		if (fallBack(input) == false)
 			std::cout << "[!] invalid argument." << std::endl; 
 		return;
 	}
 
 	std::string	remaining;
-	sstream >> remaining;
-
-	if (!remaining.empty() && remaining != "f") {
+	if (!sstream.eof() || (!remaining.empty() && remaining != "f")) {
 		std::cout << "[!] invalid end argument." << std::endl; 
 		return;
 	}
