@@ -74,8 +74,7 @@ Form::~Form(void) {
 Form	&Form::operator=(const Form &other) {
 	if (this == &other)
 		return *this;
-	this->~Form();
-	new(this) Form(other);
+	_isSigned = other.isSigned();
 	return *this;
 }
 
@@ -100,7 +99,7 @@ void	Form::beSigned(const Bureaucrat &bureaucrat) {
 		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because his grade is too low";
 		throw Form::GradeTooLowException(error);
 	}
-	if (isSigned() == false) {
+	if (isSigned() == true) {
 		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because " + getName() + " is already signed";
 		throw std::runtime_error(error);
 	}

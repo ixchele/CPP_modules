@@ -28,7 +28,6 @@ public:
 	int			getGrade(void) const;
 	std::string	getName(void) const;
 	void		setGrade(long long grade);
-	void		setName(std::string name);
 
 	void		incrementGrade(void);
 	void		decrementGrade(void);

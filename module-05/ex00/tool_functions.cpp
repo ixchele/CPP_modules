@@ -1,21 +1,8 @@
-#include "colors.h"
 #include <cstdlib>
 #include <iostream>
 #include <string>
 #include <tool_functions.hpp>
 
-#define PHONE_BOOK_ART COLOR_MAGENTA "    /$$$$$$$  /$$                                           /$$$$$$$                      /$$      \n" \
-"   | $$__  $$| $$                                          | $$__  $$                    | $$      \n" \
-"   | $$  \\ $$| $$$$$$$   /$$$$$$  /$$$$$$$   /$$$$$$       | $$  \\ $$  /$$$$$$   /$$$$$$ | $$   /$$\n" \
-"   | $$$$$$$/| $$__  $$ /$$__  $$| $$__  $$ /$$__  $$      | $$$$$$$  /$$__  $$ /$$__  $$| $$  /$$/\n" \
-"   | $$____/ | $$  \\ $$| $$  \\ $$| $$  \\ $$| $$$$$$$$      | $$__  $$| $$  \\ $$| $$  \\ $$| $$$$$$/ \n" \
-"   | $$      | $$  | $$| $$  | $$| $$  | $$| $$_____/      | $$  \\ $$| $$  | $$| $$  | $$| $$_  $$ \n" \
-"   | $$      | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$      | $$$$$$$/|  $$$$$$/|  $$$$$$/| $$ \\  $$\n" \
-"   |__/      |__/  |__/ \\______/ |__/  |__/ \\_______/      |_______/  \\______/  \\______/ |__/  \\__/\n" \
-"\n"
-
-#define PHONE_BOOK_HELP COLOR_BLUE"   How to use :\n" \
-"    [ ]ADD:       Save a new contact\n    [ ]SEARCH:    Display a specific contact\n    [󰈆 ]EXIT:      Exit the program\n\n" COLOR_RESET
 
 void disableAlternateScreen() {
 	std::cout << "\033[?1049l" << std::flush;

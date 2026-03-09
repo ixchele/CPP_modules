@@ -13,7 +13,6 @@ protected:
 	const long long		_gradeRequiredToSign;
 	const long long		_gradeRequiredToExecute;
 
-	long long	checkGrade(long long grade);
 public:
 	struct GradeException : public std::runtime_error {
 		GradeException(const std::string &error);

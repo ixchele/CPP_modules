@@ -37,8 +37,7 @@ Bureaucrat::~Bureaucrat(void) {
 Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &other) {
 	if (this == &other)
 		return *this;
-	this->~Bureaucrat();
-	new(this) Bureaucrat(other);
+	_grade = other.getGrade();
 	return *this;
 }
 
@@ -53,9 +52,8 @@ std::string	Bureaucrat::getName(void) const {
 void	Bureaucrat::setGrade(long long grade) {
 	if (grade < 1)
 		throw Bureaucrat::GradeTooHighException(COLOR_RED "[!] Bureaucrat grade is too high" COLOR_RESET);
-	else
-		if (grade > 150)
-			throw Bureaucrat::GradeTooLowException(COLOR_RED "[!] Bureaucrat grade is too low" COLOR_RESET);
+	else if (grade > 150)
+		throw Bureaucrat::GradeTooLowException(COLOR_RED "[!] Bureaucrat grade is too low" COLOR_RESET);
 	_grade = grade;
 }
 

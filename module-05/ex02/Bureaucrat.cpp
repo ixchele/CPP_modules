@@ -38,8 +38,7 @@ Bureaucrat::~Bureaucrat(void) {
 Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &other) {
 	if (this == &other)
 		return *this;
-	this->~Bureaucrat();
-	new(this) Bureaucrat(other);
+	_grade = other.getGrade();
 	return *this;
 }
 

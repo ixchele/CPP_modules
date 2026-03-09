@@ -12,6 +12,5 @@ public:
 	~Intern();
 
 	Intern& operator=(const Intern& other); // = delete
-	//
 	AForm	*makeForm(const std::string &formName, const std::string &target) const;
 };
