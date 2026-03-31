@@ -96,11 +96,11 @@ long long	Form::gradeRequiredToExecute(void) const {
 
 void	Form::beSigned(const Bureaucrat &bureaucrat) {
 	if (bureaucrat.getGrade() > gradeRequiredToSign()) {
-		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because his grade is too low";
+		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + " because his grade is too low";
 		throw Form::GradeTooLowException(error);
 	}
 	if (isSigned() == true) {
-		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + "because " + getName() + " is already signed";
+		std::string error = bureaucrat.getName() + " couldn't sign " + getName() + " because " + getName() + " is already signed";
 		throw std::runtime_error(error);
 	}
 	std::cout << bureaucrat.getName() + " signed " + getName() << std::endl; 

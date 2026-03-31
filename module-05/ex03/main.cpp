@@ -3,37 +3,23 @@
 
 int main() {
     Intern someRandomIntern;
-    AForm* rrf;
+    AForm* rrf = NULL;
 
     try {
         rrf = someRandomIntern.makeForm("robotomy request", "Bender");
-        std::cout << *rrf << std::endl;
-        delete rrf;
-    }
-    catch (std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+        if (rrf) {
+            std::cout << "Form " + rrf->getName() + " created!" << std::endl;
+            delete rrf;
+        }
 
-    std::cout << "---------------------------------" << std::endl;
+        std::cout << "---" << std::endl;
 
-    try {
-        rrf = someRandomIntern.makeForm("shrubbery creation", "Home");
-        std::cout << *rrf << std::endl;
-        delete rrf;
+        AForm* unknown;
+        unknown = someRandomIntern.makeForm("invalid form name", "Target");
+        delete unknown;
     }
-    catch (std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-
-    std::cout << "---------------------------------" << std::endl;
-
-    try {
-        rrf = someRandomIntern.makeForm("coffee request", "Boss");
-        std::cout << *rrf << std::endl;
-        delete rrf;
-    }
-    catch (std::exception& e) {
-        std::cerr << "Caught Exception: " << e.what() << std::endl;
+    catch (const std::exception& e) {
+        std::cerr << "Exception catched : " << e.what() << std::endl;
     }
 
     return 0;

@@ -12,7 +12,7 @@ CXX = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 INCLUDES = -I.
 LFLAGS = 
-SRC = Bureaucrat.cpp Form.cpp main.cpp tool_functions.cpp 
+SRC = Bureaucrat.cpp Form.cpp main.cpp
 OBJ = $(SRC:%.cpp=obj/%.o)
 
 all: $(NAME)

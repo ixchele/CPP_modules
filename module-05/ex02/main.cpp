@@ -1,59 +1,42 @@
-#include <iostream>
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include <iostream>
 
 int main() {
-
-	std::cout << "--- 1. Tests Grades and Exceptions ---" << std::endl;
 	try {
-		Bureaucrat low("Stagiaire", 150);
-		Bureaucrat high("Directeur", 1);
+		Bureaucrat boss("The Boss", 1);
+		Bureaucrat intern("The Intern", 140);
 
-		ShrubberyCreationForm f1("Jardin");
+		AForm *shrub = new ShrubberyCreationForm("Garden");
+		AForm *robo = new RobotomyRequestForm("Bender");
+		AForm *pardon = new PresidentialPardonForm("Ford Prefect");
 
-		high.executeForm(f1);
-	} catch (std::exception &e) {
-		std::cerr << "Erreur : " << e.what() << std::endl;
-	}
-
-	std::cout << "\n--- 2. Test Shrubbery (file creation) ---" << std::endl;
-	try {
-		Bureaucrat b1("Gardener", 130);
-		ShrubberyCreationForm f2("Garden");
-
-		b1.signForm(f2);
-		b1.executeForm(f2);
-	} catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	}
-
-	std::cout << "\n--- 3. Test Robotomy (50/50) ---" << std::endl;
-	try {
-		Bureaucrat b2("Scientifique", 40);
-		RobotomyRequestForm f3("Bender");
-
-		b2.signForm(f3);
-		for (int i = 0; i < 4; i++) {
-			std::cout << "try #" << i + 1 << " :" << std::endl;
-			b2.executeForm(f3);
-			std::cout << "---" << std::endl;
+		std::cout << "--- Shrubbery ---" << std::endl;
+		boss.signForm(*shrub);
+		try {
+			intern.executeForm(*shrub);
+		} catch (std::exception &e) {
+			std::cerr << "Intern execution failed: " << e.what() << std::endl;
 		}
-	} catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	}
+		boss.executeForm(*shrub);
 
-	std::cout << "\n--- 4. Test Presidential Pardon ---" << std::endl;
-	try {
-		Bureaucrat president("Zaphod Beeblebrox", 1);
-		PresidentialPardonForm f4("Arthur Dent");
+		std::cout << "\n--- Robotomy ---" << std::endl;
+		boss.signForm(*robo);
+		boss.executeForm(*robo);
+		boss.executeForm(*robo);
 
-		president.signForm(f4);
-		president.executeForm(f4);
+		std::cout << "\n--- Pardon ---" << std::endl;
+		boss.signForm(*pardon);
+		boss.executeForm(*pardon);
+
+		delete shrub;
+		delete robo;
+		delete pardon;
+
 	} catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
+		std::cerr << "Critical Error: " << e.what() << std::endl;
 	}
 
 	return 0;
