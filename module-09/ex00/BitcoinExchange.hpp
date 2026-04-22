@@ -6,22 +6,19 @@
 #include <iostream>
 
 class	BitcoinExchange {
-	private:
+	public:
 		typedef	std::map<std::string, float> DataBase;
+		typedef	std::pair<std::string, float> Data;
+	private:
 
 		const DataBase		_dataBase;
 		const std::string	_dbPath;
 		std::ifstream		_inputFile;	
 
 		DataBase	_loadDataBase(const std::string &dbPath) const;
-		void		_openFile(const std::string &file) const;
-		void		_parseFile(const std::string &file) const;
-		void		_parseLine(const std::string &line) const;
+		DataBase	_loadInputFile(const std::string &filePath) const;
 
 	public:
-		struct	Exception : public std::runtime_error {
-			Exception(const std::string &error) : std::runtime_error(error) {};
-		};
 
 		BitcoinExchange(void);
 		BitcoinExchange(const std::string &dbPath);
@@ -31,11 +28,15 @@ class	BitcoinExchange {
 		
 		BitcoinExchange	operator=(const BitcoinExchange &other);
 		
-		void	processFile(const std::string &inputFile) const;
 		DataBase	getDataBase(void);
+
+		void	processFile(const std::string &inputFile) const;
 		void	processLine(const std::string &line) const;
 
-	private:
+		struct	Exception : public std::runtime_error {
+			Exception(const std::string &error) : std::runtime_error(error) {};
+		};
+
 		struct	FileError : public Exception {
 			FileError(const std::string &error) : Exception(error) {};
 		};
