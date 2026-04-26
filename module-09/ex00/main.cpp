@@ -1,14 +1,11 @@
 #include "BitcoinExchange.hpp"
-#include <sstream>
-#include <string>
 
 int main (int ac, char **av) {
-	(void)ac;
-	(void)av;
+	if (ac != 2)
+		return (std::cout << "[!] Usage : ./btc <inputFile>", -1);
 
 	BitcoinExchange a = BitcoinExchange();
-	a.processFile("./input.txt");
+	a.processFile(av[1]);
 
-	
 	return 0;
 }

@@ -1,9 +1,7 @@
 #pragma once
-#include <fstream>
 #include <map>
 #include <stdexcept>
 #include <string>
-#include <iostream>
 
 class	BitcoinExchange {
 	public:
@@ -13,10 +11,8 @@ class	BitcoinExchange {
 
 		const DataBase		_dataBase;
 		const std::string	_dbPath;
-		std::ifstream		_inputFile;	
 
 		DataBase	_loadDataBase(const std::string &dbPath) const;
-		DataBase	_loadInputFile(const std::string &filePath) const;
 
 	public:
 
@@ -31,7 +27,7 @@ class	BitcoinExchange {
 		DataBase	getDataBase(void);
 
 		void	processFile(const std::string &inputFile) const;
-		void	processLine(const std::string &line) const;
+		void	processLine(const Data &data) const;
 
 		struct	Exception : public std::runtime_error {
 			Exception(const std::string &error) : std::runtime_error(error) {};
@@ -53,11 +49,3 @@ class	BitcoinExchange {
 			TooLargeNumber(const std::string &error) : Exception(error) {};
 		};
 };
-
-template <typename K, typename V>
-void printMap(const std::map<K, V>& m)
-{
-    typename std::map<K, V>::const_iterator it;
-    for (it = m.begin(); it != m.end(); ++it)
-        std::cout << it->first << " => " << it->second << std::endl;
-}
