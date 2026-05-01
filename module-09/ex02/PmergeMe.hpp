@@ -28,3 +28,6 @@ void	fillContainer(Container &container, const std::string &input) {
 	if (!ssInput.eof())
 		throw std::runtime_error("Error");
 }
+
+unsigned int	JacobsthalSeq(unsigned int n);
+
