@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstddef>
 #include <set>
 #include <iostream>
 #include <sstream>
@@ -48,31 +49,36 @@ void print_range(InputIterator first, InputIterator last) {
 }
 
 template <typename Container>
-void	fillContainer(Container &container, const std::string &input) {
-	if (input.empty())
-		throw std::runtime_error("Error");
-
-	std::stringstream	ssInput(input);
-	long				number = 0;	
-	std::set<int>		seen;
-
-	while (1) {
-		ssInput >> number;
-
-		if (ssInput.fail())
-			break;
-
-		if (number < 0 || number > std::numeric_limits<int>::max())
+void	fillContainer(Container &container, const std::string *input, int count) {
+	
+	for (int i = 0; i < count; ++i)
+	{
+		if (input[i].empty())
 			throw std::runtime_error("Error");
 
-		if (!seen.insert(static_cast<int>(number)).second)
-					throw std::runtime_error("Error");
+		std::stringstream	ssInput(input[i]);
+		long				number = 0;	
+		std::set<int>		seen;
 
-		container.push_back(number);
+		while (1) {
+			ssInput >> number;
+
+			if (ssInput.fail())
+				break;
+
+			if (number < 0 || number > std::numeric_limits<int>::max())
+				throw std::runtime_error("Error");
+
+			if (!seen.insert(static_cast<int>(number)).second)
+						throw std::runtime_error("Error");
+
+			container.push_back(number);
+
+			if (!ssInput.eof())
+				throw std::runtime_error("Error");
+		}
+
 	}
-
-	if (!ssInput.eof())
-		throw std::runtime_error("Error");
 }
 
 

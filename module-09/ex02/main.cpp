@@ -116,13 +116,17 @@ void fordJohnsonSort(std::vector<int> &data) {
 
 int main (int ac, char *av[]) {
 	try {
-		if (ac != 2)
+		if (ac < 2)
 			throw std::runtime_error("[x] Usage: ./pmg <positive integers>");
 
 		std::vector<int> vec;
 		std::deque<int> deq;
-		fillContainer(vec, av[1]);
-		fillContainer(deq, av[1]);
+
+		std::vector<std::string>	tmp(av, av + ac);
+		std::vector<std::string>	a(av, av+ac);
+
+		fillContainer(vec, tmp.data(), ac);
+		fillContainer(deq, tmp.data(), ac);
 
 		struct timeval start, end;
 
